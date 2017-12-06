@@ -1,0 +1,40 @@
+#! /bin/bash
+
+# Port forwarding configuration 
+
+# Delete all the existing custom rules
+# As of now I can't tell how many rules are configured
+# I simply delete the first 100 rules, wild guess we shouldn't have that much rules in place..
+{%- for RULE_NUM in range( 1, 100 ) %}
+config -d config.firewall.portforwards.portforward{{ RULE_NUM }}
+{%- endfor %}
+
+# Then I reset the forwarding + masquerading
+config -d config.firewall.lan.forwards.lan
+config -d config.firewall.lan.forwards.wan
+config -d config.firewall.wan.forwards.lan
+config -d config.firewall.wan.forwards.wan
+config -d config.firewall.wan.masquerade.enabled
+config -d config.firewall.lan.masquerade.enabled
+
+# Extracting/Building Forward rules 
+{%- for RULE in PORTFORWARDS_RULES %}
+	{%- for PARAM, VALUE in RULE.items() %}
+config -s config.firewall.portforwards.portforward{{ loop.index }}.{{ PARAM }}={{ VALUE }}
+	{%- endfor %}
+{% endfor %}
+
+# Setting the total rule number
+config -s config.firewall.portforwards.total={{ PORTFORWARDS_RULES|length }}
+
+# Activate the portforwarding
+config -s config.firewall.lan.forwards.lan=on
+config -s config.firewall.lan.forwards.wan=on
+config -s config.firewall.wan.forwards.lan=on
+config -s config.firewall.wan.forwards.wan=on
+
+# Activate masquerading
+config -s config.firewall.wan.masquerade.enabled=on
+config -s config.firewall.lan.masquerade.enabled=on
+
+# End of the port forwards config

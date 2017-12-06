@@ -1,0 +1,28 @@
+---
+# MANDATORY
+device_name: test-nico1-og55
+device_group: opengear-MEOW
+class: ACM550x
+model: ACM5508-2
+max_port: 8
+firmware_version: 4.0.0u1
+
+# If you don't use an interface, fill the hardware_address so we have the info
+# but let the ipv4.address empty/none so it won't be processed by the xml config generator
+wan:
+  hardware_address: 00:00:0:00:00:01
+  ipv4:
+    address: 
+    netmask: 255.255.255.0
+    gateway: 1.1.1.254
+    dns1: 8.8.8.8
+    dns2: 8.8.4.4
+lan:
+  hardware_address: 00:00:0:00:00:02
+  ipv4:
+    address: 2.2.2.0
+    netmask: 255.255.255.0
+    gateway: 2.2.2.254
+    dns1: 9.9.9.9
+    dns2: 9.9.9.4
+...

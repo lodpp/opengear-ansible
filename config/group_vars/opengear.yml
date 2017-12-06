@@ -1,0 +1,12 @@
+---
+# login info, we connect by default as root user
+ansible_user: root
+
+# port used by default
+ansible_port: 22
+
+ansible_local_tmp: /tmp
+ansible_remote_tmp: /tmp
+
+...
+

@@ -1,0 +1,15 @@
+---
+- hosts: opengear
+  remote_user: root
+  gather_facts: False
+  tasks:
+  - name: Test if the box is reachable
+    raw: /bin/echo helloworld
+
+  - name: Set the escape char to @
+    raw: config -s config.ports.port{{ item }}.escapechar=@
+    with_sequence: start=1 end={{ max_port }} stride=1
+
+  - name: Sync new config on serial ports to the live config
+    raw: config -r serialconfig
+...

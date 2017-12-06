@@ -1,0 +1,168 @@
+---
+OPENGEAR_INFOS:
+  class: ACM550x
+  model: ACM5508-2
+  max_port: 8
+  firmware_version: 4.0.0u1
+  wan_hardware_address: 00:00:0:00:00:01
+  lan_hardware_address: 00:00:0:00:00:02
+
+WAN_IPV4:
+  address: 1.1.1.1
+  netmask: 255.255.255.0
+  gateway: 1.1.1.254
+  dns1: 8.8.8.8
+  dns2: 8.8.4.4
+  alias: "192.168.0.1/24"
+
+LAN_IPV4:
+  address: 2.2.2.1
+  netmask: 255.255.255.0
+  gateway: 2.2.2.254
+  dns1: 9.9.9.9
+  dns2: 9.9.9.4
+
+SERVICES:
+  snmp_community: "xxxxx"
+  snmp_contact: "xxxxxxx"
+  snmp_location: "xxxxxx"
+
+PORTS:
+    port1:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port1
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+    port2:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port2
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+    port3:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port3
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+    port4:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port4
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+    port5:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port5
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+    port6:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port6
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+    port7:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port7
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+    port8:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port8
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+  
+...

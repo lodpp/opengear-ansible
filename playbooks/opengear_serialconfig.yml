@@ -1,0 +1,26 @@
+---
+# That playbook is used to reset the serial port
+# 1-Generate the config (as a bash script to exec on the box
+#   rules are in a yaml file in datas/ directory
+# 2-Upload the script and exec it
+
+- hosts: opengear
+  gather_facts: False
+  tasks:
+  - name: Test if boxes are alive
+    raw: /bin/echo helloworld
+
+  - name: Create serialconfig file variable like serialconfig_$hostname.sh
+    set_fact:
+      SERIALCONFIGFILENAME: "serialconfig_{{ inventory_hostname }}.sh"
+
+  - name: Create path /tmp/OPENGEAR/FIREWALL/ if needed
+    local_action: file dest=/tmp/OPENGEAR/SERIALCONFIG state=directory
+
+  - name: Generate the  config in the bash script
+    local_action: template src=../templates/opengear_serialconfig.j2 dest=/tmp/OPENGEAR/SERIALCONFIG/{{ SERIALCONFIGFILENAME }}
+
+  - name: Send the script to the box and exec it
+    script: /tmp/OPENGEAR/SERIALCONFIG/{{ SERIALCONFIGFILENAME }}
+
+...

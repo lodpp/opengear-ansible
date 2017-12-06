@@ -1,0 +1,34 @@
+---
+# That playbook is used to finish the setup after a fresh install
+# It will configure the final password + ssh keys + patch for users
+# It can do whatever you want as long as you don't need python on the remote device
+
+
+- hosts: world
+  gather_facts: False
+  tasks:
+  - name: Set password "default" for the play instead of the ssh-key
+    set_fact: ansible_ssh_pass="default"
+
+  - name: Set user to "root" on the remote device
+    set_fact: ansible_ssh_user="root"
+
+  - name: Test if boxes are alive
+    raw: /bin/echo helloworld
+
+  - name: Setting new passwords for Users
+    script: ../scripts/opengear_postinstall_passwords.sh
+
+  - name: Adding ssh keys for Users
+    script: ../scripts/opengear_postinstall_sshkeys.sh
+
+  - name: Pushing console-setup script to the box
+    script: ../scripts/opengear_postinstall_console-setup.sh
+
+  - name: Updating the sudoers file to allow non-admin users to modify console port config
+    script: ../scripts/opengear_postinstall_sudoers.sh
+
+  - name: Exec a last bash script for misc stuff
+    script: ../scripts/opengear_postinstall_misc.sh
+
+...

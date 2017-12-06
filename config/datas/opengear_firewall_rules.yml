@@ -1,0 +1,36 @@
+---
+# vars file for opengear_firewall
+# firewall rules 
+
+# Template for a rule: configure only what you need or leave the value blank
+#  -name: nameOfTheRule
+#   ipversion : ipv4|ipv6
+#   action: accept|block
+#   direction: ingress|egress
+#   interface: any|wan|dialout|dialin|vpn
+#   ports: port|port-range
+#   protocol: any|tcp|udp|gre|tcp&udp|icmp|esp
+#   src_ip: a.b.c.d/nm
+#   dst_ip: w.x.y.z/nm
+#   src_mac: aa:bb:cc:dd:ee:ff
+
+# Rules will be applied in that order
+ 
+FIREWALL_RULES:
+
+    # Allow connection from subnet interface alias
+    # lazy in DC, unplug the wan interface, plug your laptop and here we go !
+  - name: netalias
+    action: accept
+    ipversion : ipv4
+    direction: ingress
+    interface: wan
+    src_ip: "192.168.0.0/24"
+
+# There is an IMPLICIT DENY made by opengear
+# Don't add one or it will break the og
+# from the template, all "service access" has been disabled
+# Watchout, you rules on top are the only way to access the box !
+# Don't touch if you don't know exactly what you are doing !
+
+...

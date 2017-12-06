@@ -1,0 +1,31 @@
+---
+# That playbook is used to generate the basic config of the opengear with ZTP
+# 1- Generate the appropriate xml config file to start the opengear
+# 2- Upload the XML to all Download servers
+# Then you just have to boot the box, the dhcp will tell the path to xml file to download
+#
+# Note:
+# It will just setup the basics to make it reachable: ip, firewall, default port configuration
+# passwords for root will stay the default and the passwd won't be set either for other user
+# You will need exec opengear_postinstall for that
+
+- hosts: world
+  gather_facts: False
+  tasks:
+  - include_vars: ../config/datas/opengear_firewall_rules.yml
+
+  - name: Convert the mac without colon to get the filename
+    local_action: shell echo {{  OPENGEAR_INFOS.wan_hardware_address  }} | sed "s/://g" | tr '[:upper:]' '[:lower:]'
+    register: MAC_NO_COLLON_TASK
+
+  - name: Creating the variable XMLFILENAME like $version_$mac.xml
+    set_fact:
+      XMLFILENAME: "{{  OPENGEAR_INFOS.class  }}_{{  MAC_NO_COLLON_TASK.stdout_lines[0]  }}.xml"
+
+  - name: Create path to store the XML in path/to/repo/rsc_ansible/config/www/xml if needed
+    local_action: file dest=../config/www/xml state=directory
+
+  - name: Generate the XML config in path/to/repo/rsc_ansible/config/www/xml
+    local_action: template src=../templates/opengear_kickstart.j2 dest=../config/www/xml/{{ XMLFILENAME }} 
+
+...

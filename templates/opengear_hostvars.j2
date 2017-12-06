@@ -1,0 +1,56 @@
+---
+{# Let's define the MAX_PORT variable, we will need it in the PORT loop #}
+{# The max_port | int is used the force the variable max_port to be an INTeger #}
+{# When you give --extra-args, the variable is threat as a STRING #}
+{%- set MAX_PORT = max_port | int -%}
+
+OPENGEAR_INFOS:
+  class: {{ class }}
+  model: {{ model}}
+  max_port: {{ max_port }}
+  firmware_version: {{ firmware_version }}
+  wan_hardware_address: {{ wan.hardware_address }}
+  lan_hardware_address: {{ lan.hardware_address }}
+
+WAN_IPV4:
+  address: {{ wan.ipv4.address|default('') }}
+  netmask: {{ wan.ipv4.netmask|default('') }}
+  gateway: {{ wan.ipv4.gateway|default('') }}
+  dns1: {{ wan.ipv4.dns1|default('') }}
+  dns2: {{ wan.ipv4.dns2|default('') }}
+  alias: "192.168.0.1/24"
+
+LAN_IPV4:
+  address: {{ lan.ipv4.address|default('') }}
+  netmask: {{ lan.ipv4.netmask|default('') }}
+  gateway: {{ lan.ipv4.gateway|default('') }}
+  dns1: {{ lan.ipv4.dns1|default('') }}
+  dns2: {{ lan.ipv4.dns2|default('') }}
+
+SERVICES:
+  snmp_community: "xxxxx"
+  snmp_contact: "xxxxxxx"
+  snmp_location: "xxxxxx"
+
+PORTS:
+  {% for PORT_NUM in range( 1, MAX_PORT+1 ) %}
+  port{{ PORT_NUM }}:
+        charsize: 8
+        escapechar: "@"
+        flowcontrol: None
+        label: port{{ PORT_NUM }}
+        loglevel: 0
+        mode: portmanager
+        parity: None
+        pinout: X2
+        protocol: RS232
+        speed: 9600
+        ssh: on
+        stop: 1
+        syslog.facility: Default
+        syslog.priority: Default
+        terminal: vt220
+
+  {% endfor %}
+
+...

@@ -1,0 +1,28 @@
+#! /bin/bash
+
+# Standard Firewall Config 
+
+# Delete all the existing custom rules
+# As of now I can't tell how many rules are configured
+# I simply delete the first 100 rules, wild guess we shouldn't have that much rules in place..
+# No risk to be bail out as the new config is not in place untill the config -r portrules
+{% for RULE_NUM in range( 1, 100 ) %}
+config -d config.firewall.portrules.portrule{{ RULE_NUM }}
+{% endfor %}
+
+# Extracting/Building FW rules from /role/opengear-firewall/vars/main.yml
+{% for RULE in FIREWALL_RULES %}
+{# variable RULE_NUM is used to set the rule number in child block  #}{% set RULE_NUM = loop.index %}
+{% for PARAM, VALUE in RULE.items() %}
+config -s config.firewall.portrules.portrule{{ RULE_NUM }}.{{ PARAM }}={{ VALUE }}
+{% endfor %}
+{% endfor %}
+
+# Setting the total rule number
+{# {{ array|length }} will give you the number of item in the array #}
+config -s config.firewall.portrules.total={{ FIREWALL_RULES|length }}
+
+# Applying the new config in running-config
+# config -r portrules #commented for test purpose
+
+# End of the FW config

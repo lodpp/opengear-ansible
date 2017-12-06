@@ -1,0 +1,38 @@
+# Inventory file for all opengears
+# note that if you have specific variable to
+# declare for groups or hosts, dont' use that
+# file, instead, fill the variable in groups_var
+#  or host_var directory
+
+# Localhost, used to generate config locally
+[local]
+localhost
+
+###############################
+# Building the location tree, group of groups
+###############################
+[world:children]
+EU
+USA
+ASIA
+
+[EU:children]
+opengear-EU
+
+[USA:children]
+opengear-USA
+
+[ASIA:children]
+opengear-ASIA
+
+# Opengear in Europe
+[opengear-EU:children]
+opengear-PARIS
+
+
+###############################
+# Let's fill the last leaf of the tree with OGs
+###############################
+[opengear-PARIS]
+test-nico1-og55
+

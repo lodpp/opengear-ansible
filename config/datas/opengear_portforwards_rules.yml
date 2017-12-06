@@ -1,0 +1,32 @@
+---
+# Vars file for opengear_port_forwarding
+
+# Template for a rule: configure only what you need or leave the value blank
+#  -name: nameOfTheRule
+#   in_address: a.b.c.d/nm
+#   in_interface: any|wan|dialout|dialin|vpn
+#   in_ports: port|port-range
+#   out_ports: port|port-range
+#   protocol: any|tcp|udp|gre|tcpandudp|icmp|esp
+#   dst_ip: w.x.y.z/nm
+#   out_address: m.n.o.p ( always a host ip for which the network is *directly connected*)
+
+# Rules will be applied in that order
+ 
+PORTFORWARDS_RULES:
+
+    # allow web access to something behind ( works both ways lan to wan and wan to lan )
+  - name:  
+    interface: any
+    protocol: tcp
+    in_address: "1.1.1.1" 
+    in_ports: 8080
+    out_address: "2.2.2.2"
+    out_ports: 80
+
+# There is an IMPLICIT DENY made by opengear when SRC_IP is set
+# So if you allow as a source ip (in_address) 1.1.1.1 => only this IP will be permited (which is probably what you want)
+#
+# DO NEVER LET the source IP empty, otherwise the output IP will be left without protection
+
+...

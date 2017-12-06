@@ -1,0 +1,18 @@
+#! /bin/bash
+
+# This script will sync the port config from opengear inventory
+# so if host specific var is not filled, then the scrip won't do anything
+
+
+# Extracting/Building the config
+
+{% for PORT  in PORTS %}
+{% for PARAM, VALUE  in PORTS[PORT].items() %}
+config -s config.ports.{{ PORT }}.{{ PARAM }}={{ VALUE }}
+{% endfor %}
+{% endfor %}
+
+# Applying the new config in running-config
+config -r serialconfig
+
+# End of the SERIAL config

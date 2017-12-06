@@ -1,0 +1,27 @@
+---
+# That playbook is used to add a new device to inventory
+# It will also create the hosts_vars file for you (based on template)
+
+- hosts: localhost
+  gather_facts: False
+  tasks:
+  - name: Looking in inventory if the device exists
+    command: grep {{ device_name }} ../config/opengear.inv
+    ignore_errors: True
+    register: deviceCheck
+
+  - name: From 1st task, fail if the device already exists
+    fail: "msg=' The device {{ device_name }} is already in your inventory'"
+    when:  deviceCheck.rc == 0
+
+  - name: Checking if the group exists
+    fail: "msg=' The group {{ device_group }} does not exists'"
+    when:  device_group not in groups
+
+  - name: Adding the new device to inventory
+    lineinfile: dest=../config/opengear.inv insertafter="\[{{ device_group }}\]" line="{{ device_name }}"
+
+  - name: Adding the new device host_vars template
+    template: src=../templates/opengear_hostvars.j2 dest=../config/host_vars/{{ device_name }}.yml
+        
+...
